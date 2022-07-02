@@ -1,0 +1,5 @@
+node_modules
+dist
+docker/database/db_data
+uploads/avatar/*
+.env
