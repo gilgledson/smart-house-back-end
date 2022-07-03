@@ -3,7 +3,6 @@ import { getCustomRepository } from 'typeorm';
 import User from '../typeorm/entities/User';
 import AppError from '@shared/errors/AppError';
 import bcrypt, { hash } from 'bcrypt';
-import RoleRepository from '@modules/auth/role/typeorm/repositories/RoleRepository';
 
 interface IRequest {
   user_id: string;
@@ -24,16 +23,11 @@ class UpdateProfileService {
     role_id,
   }: IRequest): Promise<User> {
     const userRepository = await getCustomRepository(UserRepository);
-    const roleRepository = await getCustomRepository(RoleRepository);
     const user = await userRepository.findById(user_id);
     if (!user) {
       throw new AppError('User not found', 404);
     }
-    const roleExists = await roleRepository.findOne(role_id);
-
-    if (!roleExists) {
-      throw new AppError(`Role not found`);
-    }
+    
     const userExists = await userRepository.findByEmail(email);
     if (userExists && userExists.id != user_id) {
       throw new AppError('There is already one user with email');

@@ -1,4 +1,3 @@
-import RoleRepository from '@modules/auth/role/typeorm/repositories/RoleRepository';
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import User from '../typeorm/entities/User';
@@ -21,12 +20,6 @@ class UpdateUserService {
     role_id,
   }: IRequest): Promise<User> {
     const userRepository = await getCustomRepository(UserRepository);
-    const roleRepository = await getCustomRepository(RoleRepository);
-    const role = await roleRepository.findById(role_id);
-
-    if (!role) {
-      throw new AppError(`role not found`);
-    }
     const user = await userRepository.findById(id);
     if (!user) {
       throw new AppError(`User not found`);
@@ -35,7 +28,6 @@ class UpdateUserService {
     user.password = password;
     user.email = email;
     user.role_id = role_id;
-    user.role = role;
     return await userRepository.save(user);
   }
 }

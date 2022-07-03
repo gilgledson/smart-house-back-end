@@ -7,7 +7,6 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Exclude, Expose } from 'class-transformer';
-import Role from '../../../auth/role/typeorm/entities/Role';
 
 @Entity('users')
 class User {
@@ -22,10 +21,6 @@ class User {
 
   @Column()
   role_id: string;
-
-  @OneToOne(() => Role)
-  @JoinColumn({ name: 'role_id' })
-  role: Role;
 
   @Column()
   @Exclude()
