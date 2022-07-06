@@ -24,12 +24,14 @@ app.use(
       return response.status(error.statusCode).json({
         status: 'error',
         message: error.message,
+        error: true,
       });
     }
 
     return response.status(500).json({
       status: 'error',
       message: 'Internal server error',
+      error_message: error.message,
     });
   },
 );

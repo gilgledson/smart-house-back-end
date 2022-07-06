@@ -1,10 +1,6 @@
 import User from '../entities/User';
 import { EntityRepository, Repository } from 'typeorm';
 
-interface IRequest {
-  name: string;
-}
-
 @EntityRepository(User)
 class UserRepository extends Repository<User> {
   public async findByName(name: string): Promise<User | undefined> {
@@ -12,7 +8,7 @@ class UserRepository extends Repository<User> {
     return user;
   }
   public async findById(id: string): Promise<User | undefined> {
-    const user = await this.findOne(id, { relations: ['role'] });
+    const user = await this.findOne(id);
     return user;
   }
   public async findByEmail(email: string): Promise<User | undefined> {

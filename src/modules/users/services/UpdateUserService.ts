@@ -8,17 +8,10 @@ interface IRequest {
   name: string;
   password: string;
   email: string;
-  role_id: string;
 }
 
 class UpdateUserService {
-  public async execute({
-    id,
-    name,
-    password,
-    email,
-    role_id,
-  }: IRequest): Promise<User> {
+  public async execute({ id, name, password, email }: IRequest): Promise<User> {
     const userRepository = await getCustomRepository(UserRepository);
     const user = await userRepository.findById(id);
     if (!user) {
@@ -27,7 +20,6 @@ class UpdateUserService {
     user.name = name;
     user.password = password;
     user.email = email;
-    user.role_id = role_id;
     return await userRepository.save(user);
   }
 }

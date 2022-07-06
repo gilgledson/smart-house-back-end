@@ -10,7 +10,6 @@ interface IRequest {
   email: string;
   password?: string;
   old_password?: string;
-  role_id: string;
 }
 
 class UpdateProfileService {
@@ -19,8 +18,7 @@ class UpdateProfileService {
     name,
     email,
     password,
-    old_password,
-    role_id,
+    old_password
   }: IRequest): Promise<User> {
     const userRepository = await getCustomRepository(UserRepository);
     const user = await userRepository.findById(user_id);
@@ -44,7 +42,6 @@ class UpdateProfileService {
     }
     user.name = name;
     user.email = email;
-    user.role_id = role_id;
     await userRepository.save(user);
     return user;
   }
