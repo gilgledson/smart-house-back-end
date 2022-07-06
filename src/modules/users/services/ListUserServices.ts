@@ -5,7 +5,7 @@ import User from '../typeorm/entities/User';
 class ListUserServices {
   public async execute(): Promise<User[]> {
     const userRepository = await getCustomRepository(UserRepository);
-    const users = await userRepository.find({ relations: ['role'] });
+    const users = await userRepository.find();
 
     return users;
   }

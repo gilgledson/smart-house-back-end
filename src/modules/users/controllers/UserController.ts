@@ -13,10 +13,10 @@ class UserController {
     return response.json(classToClass(users));
   }
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, email, password, role_id } = request.body;
+    const { name, email, password } = request.body;
     const userService = new CreateUserService();
-    const user = await userService.execute({ name, email, password, role_id });
-    return response.json(classToClass(user));
+    const user = await userService.execute({ name, email, password });
+    return response.status(201).json(classToClass(user));
   }
   public async show(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
@@ -25,7 +25,7 @@ class UserController {
     return response.json(classToClass(user));
   }
   public async update(request: Request, response: Response): Promise<Response> {
-    const { name, email, password, role_id } = request.body;
+    const { name, email, password } = request.body;
     const { id } = request.params;
     const userService = new UpdateUserService();
     const user = await userService.execute({
@@ -33,7 +33,6 @@ class UserController {
       name,
       password,
       email,
-      role_id,
     });
     return response.json(classToClass(user));
   }

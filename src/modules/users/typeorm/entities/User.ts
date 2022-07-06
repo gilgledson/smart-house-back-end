@@ -2,8 +2,6 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Exclude, Expose } from 'class-transformer';
@@ -18,9 +16,6 @@ class User {
 
   @Column()
   email: string;
-
-  @Column()
-  role_id: string;
 
   @Column()
   @Exclude()

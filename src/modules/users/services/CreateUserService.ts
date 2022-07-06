@@ -7,27 +7,20 @@ interface IRequest {
   name: string;
   email: string;
   password: string;
-  role_id: string;
 }
 
 class CreateUserService {
-  public async execute({
-    name,
-    email,
-    password,
-    role_id,
-  }: IRequest): Promise<User> {
+  public async execute({ name, email, password }: IRequest): Promise<User> {
     const userRepository = getCustomRepository(UserRepository);
     const userExists = await userRepository.findByEmail(email);
     if (userExists) {
-      throw new AppError(`E-mail ${email} already exists`, 422);
+      throw new AppError(`E-mail ${email} já cadastrado`, 422);
     }
     const hasPassword = await hash(password, 8);
     const user = await userRepository.create({
       name,
       email,
       password: hasPassword,
-      role_id,
     });
     await userRepository.save(user);
     return user;
