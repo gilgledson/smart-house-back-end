@@ -1,5 +1,4 @@
 import * as Schedule from 'node-schedule';
-import * as moment from 'moment';
 import { getCustomRepository } from 'typeorm';
 import ScheduleRepository from '../typeorm/repositories/ScheduleRepository';
 import EquipmentRepository from '../../equipment/typeorm/repositories/EquipmentRepository';

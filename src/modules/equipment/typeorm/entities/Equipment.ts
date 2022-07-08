@@ -41,6 +41,8 @@ class Equipment {
 
   @Column({ type: 'bool', width: 1 })
   power: boolean;
+  @Column({ type: 'decimal' })
+  temperature: number;
 
   @OneToOne(() => User)
   @JoinColumn({ name: 'user_id' })

@@ -1,3 +1,5 @@
-test('should be 10', () => {
-  expect(5 + 5).toBe(10);
+describe('CreateUser', () => {
+  it('should create a new user', () => {
+    expect(1).toBe(1);
+  });
 });

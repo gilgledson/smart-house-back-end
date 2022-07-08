@@ -9,9 +9,10 @@ import AppError from '../errors/AppError';
 import '@shared/typeorm';
 import UploadConfig from '@config/upload';
 import { pagination } from 'typeorm-pagination';
-
+import MqttSubscribeUpdateEquipmentService from '../../modules/mqtt/service/MqttSubscribeEquipmentTopicService';
 const app = express();
-
+const mqttSubscribeUpdateEquipmentService =
+  new MqttSubscribeUpdateEquipmentService();
 app.use(cors());
 app.use(express.json());
 app.use(pagination);
@@ -37,5 +38,6 @@ app.use(
 );
 
 app.listen(3333, () => {
+  mqttSubscribeUpdateEquipmentService.execute();
   console.log('server run on http://localhost:3333 🚀🚀');
 });
