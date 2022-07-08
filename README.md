@@ -35,5 +35,20 @@ Imagem do fluxo das informações abaixo:
 
 ## INSTALAÇÃO DO PROJETO
 
+### Tecnologias usadas
 
+* [NodeJS](https://nodejs.org/en/)
+* [ExpressJS](https://expressjs.com/)
+* [PostgreSQL](https://www.postgresql.org/)
+* [Typeorm](https://typeorm.io/)
+* [Docker](https://www.docker.com/)
+
+### Clone o projeto 
+   ```sh
+   git clone https://github.com/gilgledson/smart-house-back-end
+   ```
+### Subindo os containers 
+   ```sh
+    cd ./smart-house-back-end && docker-compose up -d
+   ```
 
