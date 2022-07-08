@@ -26,7 +26,7 @@ jobs:
         ports:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-
+  ci:
     steps:
     - name: "Checkout \U0001F6CE"
       uses: actions/checkout@master
@@ -35,9 +35,6 @@ jobs:
       with:
         node-version: '${{ matrix.node }}'
         check-latest: true
-    - name: "Get yarn cache directory path \U0001F6E0"
-      id: yarn-cache-dir-path
-      run: 'echo "::set-output name=dir::$(yarn cache dir)"'
     - name: "Cache node_modules \U0001F4E6"
       uses: actions/cache@v2.1.4
       id: yarn-cache
@@ -49,7 +46,9 @@ jobs:
     - name: "Install dependencies \U0001F468\U0001F3FB‍\U0001F4BB"
       run: yarn
     - name: run migrations
-      uses: actions/setup-node@v2.1.5
+      with:
+        node-version: '${{ matrix.node }}'
+        check-latest: true
       run: |
         yarn typeorm migration:run
       env:
@@ -64,8 +63,10 @@ jobs:
         DB_DATABASE: smart_house
         DB_TYPE: postgres
     - name: "Run tests \U0001F9EA"
-      uses: actions/setup-node@v2.1.5
       run: yarn test
+      with:
+        node-version: '${{ matrix.node }}'
+        check-latest: true
       env:
         APP_URL: 'http://localhost:3333'
         APP_SECRET_KEY: d2f30b11385709b2b760444be14e2477
