@@ -104,7 +104,7 @@ Com isso deve subir os container que precisamos para rodar o projeto:
      
       
  5 - Configuração Cliente MQTT para simular o microcontrolador, use o MQTTBox com o link abaixo
- * [MQTTBox](https://chrome.google.com/webstore/detail/mqttbox)
+ * [MQTTBox](https://chrome.google.com/webstore/detail/mqttbox/kaajoficamnjijhkeomgfljpicifbkaf?hl=pt-BR)
  
  6 - Configurando o cliente MQTT
  
