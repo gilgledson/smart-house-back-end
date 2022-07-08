@@ -9,41 +9,6 @@ name: ci
       - develop
       - master
 jobs:
-  postgres-job:
-    # containers must run in Linux based operating systems
-    runs-on: ubuntu-latest
-    # Docker Hub image that `postgres-job` executes in
-    container: node:latest
-
-    # service containers to run with `postgres-job`
-    services:
-      postgres:
-        image: postgres:latest
-        env:
-          POSTGRES_DB: postgres_db
-          POSTGRES_PASSWORD: postgres_password
-          POSTGRES_PORT: 5432
-          POSTGRES_USER: postgres_user
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-    steps:
-      - name: Install PostgreSQL client
-        run: |
-          apt-get update
-          apt-get install --yes postgresql-client
-
-      # queries database with postgres client
-      - name: Query database
-        run: psql -h postgres -d postgres_db -U postgres_user -c 'SELECT 1;'
-        env:
-          # postgress password is required; alternatively, you can run:
-          # `PGPASSWORD=postgres_password psql ...`
-          PGPASSWORD: postgres_password
   ci:
     runs-on: ${{ matrix.os }}
 
@@ -51,7 +16,22 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         node: [16]
-
+        # service containers to run with `postgres-job`
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: smart_house
+          POSTGRES_PASSWORD: password
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
     - name: "Checkout \U0001F6CE"
       uses: actions/checkout@master
