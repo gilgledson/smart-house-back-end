@@ -57,6 +57,7 @@ jobs:
     - name: "Install dependencies \U0001F468\U0001F3FB‍\U0001F4BB"
       run: yarn
     - name: run migrations
+      uses: actions/setup-node@v2.1.5
       run: |
         yarn typeorm migration:run
       env:
@@ -71,6 +72,7 @@ jobs:
         DB_DATABASE: smart_house
         DB_TYPE: postgres
     - name: "Run tests \U0001F9EA"
+      uses: actions/setup-node@v2.1.5
       run: yarn test
       env:
         APP_URL: 'http://localhost:3333'
