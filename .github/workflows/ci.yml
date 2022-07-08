@@ -1,6 +1,5 @@
 name: ci
-
-on:
+'on':
   push:
     branches:
       - develop
@@ -9,79 +8,76 @@ on:
     branches:
       - develop
       - master
-
 jobs:
   services:
     postgres:
-      image: postgres:latest
+      image: 'postgres:latest'
       env:
         POSTGRES_PASSWORD: password
         POSTGRES_DB: smart_house
       ports:
-        - 5432:5432
-      options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        - '5432:5432'
+      options: >-
+        --health-cmd pg_isready --health-interval 10s --health-timeout 5s
+        --health-retries 5
     mosquitto:
       image: eclipse-mosquitto
       ports:
         - 1883/tcp
         - 8883/tcp
   ci:
-    runs-on: ${{ matrix.os }}
-
+    runs-on: '${{ matrix.os }}'
     strategy:
       matrix:
-        os: [ubuntu-latest]
-        node: [16]
+        os:
+          - ubuntu-latest
+        node:
+          - 16
   steps:
-      - name: Checkout 🛎
-        uses: actions/checkout@master
-
-      - name: Setup node env 🏗
-        uses: actions/setup-node@v2.1.5
-        with:
-          node-version: ${{ matrix.node }}
-          check-latest: true
-
-      - name: Get yarn cache directory path 🛠
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: Cache node_modules 📦
-        uses: actions/cache@v2.1.4
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Install dependencies 👨🏻‍💻
-        run: yarn
-
-      - name: run migrations
-        run: |
-          yarn typeorm migration:run
-        env:
-          APP_URL: http://localhost:3333
-          APP_SECRET_KEY: d2f30b11385709b2b760444be14e2477
-          MQTT_HOST: postgres
-          MQTT_PORT: 1883
-          DB_HOST: postgres
-          DB_PORT: 5432
-          DB_USERNAME: postgres
-          DB_PASSWORD: password
-          DB_DATABASE: smart_house
-          DB_TYPE: postgres
-      - name: Run tests 🧪
-        run: yarn test
-        env:
-          APP_URL: http://localhost:3333
-          APP_SECRET_KEY: d2f30b11385709b2b760444be14e2477
-          MQTT_HOST: postgres
-          MQTT_PORT: 1883
-          DB_HOST: postgres
-          DB_PORT: 5432
-          DB_USERNAME: postgres
-          DB_PASSWORD: password
-          DB_DATABASE: smart_house
-          DB_TYPE: postgres
+    - name: "Checkout \U0001F6CE"
+      uses: actions/checkout@master
+    - name: "Setup node env \U0001F3D7"
+      uses: actions/setup-node@v2.1.5
+      with:
+        node-version: '${{ matrix.node }}'
+        check-latest: true
+    - name: "Get yarn cache directory path \U0001F6E0"
+      id: yarn-cache-dir-path
+      run: 'echo "::set-output name=dir::$(yarn cache dir)"'
+    - name: "Cache node_modules \U0001F4E6"
+      uses: actions/cache@v2.1.4
+      id: yarn-cache
+      with:
+        path: '${{ steps.yarn-cache-dir-path.outputs.dir }}'
+        key: '${{ runner.os }}-yarn-${{ hashFiles(''**/yarn.lock'') }}'
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+    - name: "Install dependencies \U0001F468\U0001F3FB‍\U0001F4BB"
+      run: yarn
+    - name: run migrations
+      run: |
+        yarn typeorm migration:run
+      env:
+        APP_URL: 'http://localhost:3333'
+        APP_SECRET_KEY: d2f30b11385709b2b760444be14e2477
+        MQTT_HOST: postgres
+        MQTT_PORT: 1883
+        DB_HOST: postgres
+        DB_PORT: 5432
+        DB_USERNAME: postgres
+        DB_PASSWORD: password
+        DB_DATABASE: smart_house
+        DB_TYPE: postgres
+    - name: "Run tests \U0001F9EA"
+      run: yarn test
+      env:
+        APP_URL: 'http://localhost:3333'
+        APP_SECRET_KEY: d2f30b11385709b2b760444be14e2477
+        MQTT_HOST: postgres
+        MQTT_PORT: 1883
+        DB_HOST: postgres
+        DB_PORT: 5432
+        DB_USERNAME: postgres
+        DB_PASSWORD: password
+        DB_DATABASE: smart_house
+        DB_TYPE: postgres
