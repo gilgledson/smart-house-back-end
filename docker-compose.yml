@@ -16,9 +16,10 @@ services:
     working_dir: /var/www
     ports:
       - "3333:3333"
+      - "8999:8999"
     networks:
       - app-network
-  postgres:
+  postgres: 
     image: postgres:latest
     restart: on-failure
     container_name: "SMARTHOUSE_POSTGRES"
@@ -31,6 +32,19 @@ services:
       - "5432"
     volumes:
       - ./docker/database/db_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+  mosquitto: 
+    image: eclipse-mosquitto
+    restart: on-failure
+    container_name: "SMARTHOUSE_MOSQUITTO"
+    ports:
+      - 1883:1883
+      - 8889:8883
+    volumes:
+       - ./docker/mosquitto/conf:/mosquitto/config
+       - ./docker/mosquitto/data:/mosquitto/data
+       - ./docker/mosquitto/log:/mosquitto/log
     networks:
       - app-network
   pgadmin4:
