@@ -28,7 +28,7 @@ jobs:
           ${{ runner.os }}-yarn-
     - name: "Install dependencies \U0001F468\U0001F3FB‍\U0001F4BB"
       run: yarn
-    - name: run migrations
+    - name: migrations
       with:
         node-version: '${{ matrix.node }}'
         check-latest: true
