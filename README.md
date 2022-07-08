@@ -51,4 +51,16 @@ Imagem do fluxo das informações abaixo:
    ```sh
     cd ./smart-house-back-end && docker-compose up -d
    ```
+Com isso deve subir os container que precisamos para rodar o projeto:
+  
+    1 - SMARTHOUSE_HOUSE - API REST 
+    
+    2 - SMARTHOUSE_MOSQUITTO - MQTT broker
+    
+    3 - SMARTHOUSE_PGADMIN - Painel para acessar o banco de dados 
+    
+    4 - SMARTHOUSE_POSTGRES - Banco de dados PostgresSQL
+
+
+
 
