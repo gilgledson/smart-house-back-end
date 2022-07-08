@@ -25,6 +25,9 @@ jobs:
       with:
         node-version: '${{ matrix.node }}'
         check-latest: true
+    - name: Get yarn cache directory path 🛠
+      id: yarn-cache-dir-path
+      run: echo "::set-output name=dir::$(yarn cache dir)"
     - name: "Cache node_modules \U0001F4E6"
       uses: actions/cache@v2.1.4
       id: yarn-cache
