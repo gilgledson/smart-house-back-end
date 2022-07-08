@@ -9,22 +9,24 @@ name: ci
       - develop
       - master
 jobs:
-  services:
-    postgres:
-      image: 'postgres:latest'
-      env:
-        POSTGRES_PASSWORD: password
-        POSTGRES_DB: smart_house
-      ports:
-        - '5432:5432'
-      options: >-
-        --health-cmd pg_isready --health-interval 10s --health-timeout 5s
-        --health-retries 5
-    mosquitto:
-      image: eclipse-mosquitto
-      ports:
-        - 1883/tcp
-        - 8883/tcp
+  build:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: 'postgres:latest'
+        env:
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: smart_house
+        ports:
+          - '5432:5432'
+        options: >-
+          --health-cmd pg_isready --health-interval 10s --health-timeout 5s
+          --health-retries 5
+      mosquitto:
+        image: eclipse-mosquitto
+        ports:
+          - 1883/tcp
+          - 8883/tcp
   ci:
     runs-on: '${{ matrix.os }}'
     strategy:
@@ -33,7 +35,7 @@ jobs:
           - ubuntu-latest
         node:
           - 16
-  steps:
+    steps:
     - name: "Checkout \U0001F6CE"
       uses: actions/checkout@master
     - name: "Setup node env \U0001F3D7"
