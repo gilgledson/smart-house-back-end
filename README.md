@@ -107,6 +107,8 @@ Com isso deve subir os container que precisamos para rodar o projeto:
  * [MQTTBox](https://chrome.google.com/webstore/detail/mqttbox)
  
  6 - Configurando o cliente MQTT
+ 
+ 
  ![img](https://i.imgur.com/fzhydri.png)
  
  
