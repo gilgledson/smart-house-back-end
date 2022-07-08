@@ -56,32 +56,4 @@ jobs:
           ${{ runner.os }}-yarn-
     - name: "Install dependencies \U0001F468\U0001F3FB‍\U0001F4BB"
       run: yarn
-    - name: run migrations
-      uses: actions/setup-node@v2.1.5
-      run: |
-        yarn typeorm migration:run
-      env:
-        APP_URL: 'http://localhost:3333'
-        APP_SECRET_KEY: d2f30b11385709b2b760444be14e2477
-        MQTT_HOST: postgres
-        MQTT_PORT: 1883
-        DB_HOST: postgres
-        DB_PORT: 5432
-        DB_USERNAME: postgres
-        DB_PASSWORD: password
-        DB_DATABASE: smart_house
-        DB_TYPE: postgres
-    - name: "Run tests \U0001F9EA"
-      uses: actions/setup-node@v2.1.5
-      run: yarn test
-      env:
-        APP_URL: 'http://localhost:3333'
-        APP_SECRET_KEY: d2f30b11385709b2b760444be14e2477
-        MQTT_HOST: postgres
-        MQTT_PORT: 1883
-        DB_HOST: postgres
-        DB_PORT: 5432
-        DB_USERNAME: postgres
-        DB_PASSWORD: password
-        DB_DATABASE: smart_house
-        DB_TYPE: postgres
+    
