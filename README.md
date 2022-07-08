@@ -60,7 +60,40 @@ Com isso deve subir os container que precisamos para rodar o projeto:
     3 - SMARTHOUSE_PGADMIN - Painel para acessar o banco de dados 
     
     4 - SMARTHOUSE_POSTGRES - Banco de dados PostgresSQL
+ 
+ 
+ ### Configurações & Executando o projeto
+   
+  1 - Acessando container
+ 
+  ```sh
+      docker exec -it SMARTHOUSE_HOUSE bash
+   ```
+   
+   2 - instalando dependencias do projeto
+ 
+  ```sh
+      yarn
+   ```
 
+   3 - Copiando arquivo de configuração
+ 
+  ```sh
+      cp .env.example .env
+   ```
+    
+   * Obs: caso esteja usando linux alterar o `host.docker.internal` para `172.17.0.1` no arquivo .env
 
+    4 - Iniciando o projeto
+ 
+  ```sh
+      yarn dev
+   ```
+
+   Você deve ver uma tela como a da imagem abaixo:
+   
+   
+   ![img](https://i.imgur.com/3yfmA3o.png)
+    
 
 
