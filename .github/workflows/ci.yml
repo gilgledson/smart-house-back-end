@@ -9,20 +9,39 @@ name: ci
       - develop
       - master
 jobs:
-    postgres-job:
-      runs-on: ubuntu-latest
-      container: node:latest
+  postgres-job:
+    # containers must run in Linux based operating systems
+    runs-on: ubuntu-latest
+    # Docker Hub image that `postgres-job` executes in
+    container: node:latest
 
-      services:
-        postgres:
-          image: postgres:latest
-          env:
-            POSTGRES_DB: postgres_db
-            POSTGRES_PASSWORD: postgres_password
-            POSTGRES_PORT: 5432
-            POSTGRES_USER: postgres_user
-          ports:
-            - 5432:5432
+    # service containers to run with `postgres-job`
+    services:
+      # label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres:latest
+        # service environment variables
+        # `POSTGRES_HOST` is `postgres`
+        env:
+          # optional (defaults to `postgres`)
+          POSTGRES_DB: postgres_db
+          # required
+          POSTGRES_PASSWORD: postgres_password
+          # optional (defaults to `5432`)
+          POSTGRES_PORT: 5432
+          # optional (defaults to `postgres`)
+          POSTGRES_USER: postgres_user
+        ports:
+          # maps tcp port 5432 on service container to the host
+          - 5432:5432
+        # set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
   ci:
     runs-on: ${{ matrix.os }}
 
