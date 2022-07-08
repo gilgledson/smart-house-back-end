@@ -32,8 +32,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         node: [16]
-
-    steps:
+  steps:
       - name: Checkout 🛎
         uses: actions/checkout@master
 
