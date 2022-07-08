@@ -39,6 +39,19 @@ equipmentRouters.put(
   }),
   equipmentController.update,
 );
+equipmentRouters.patch(
+  '/',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().required(),
+    },
+    [Segments.BODY]: {
+      power: Joi.string().required().valid('ON', 'OFF'),
+      temperature: Joi.number().required(),
+    },
+  }),
+  equipmentController.update,
+);
 equipmentRouters.delete(
   '/',
   celebrate({

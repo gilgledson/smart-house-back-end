@@ -5,6 +5,7 @@ import UpdateEquipmentService from '../services/UpdateEquipmentService';
 import ListEquipmentService from '../services/ListEquipmentService';
 import DeleteEquipmentService from '../services/DeleteEquipmentService';
 import { classToClass } from 'class-transformer';
+import UpdateEquipmentStatusAndTemperature from '../services/UpdateEquipmentStatusAndTemperature';
 
 class EquipmentController {
   public async list(request: Request, response: Response): Promise<Response> {
@@ -12,6 +13,23 @@ class EquipmentController {
     const user_id = await request.user.id;
     const users = await equipmentService.execute(user_id);
     return response.json(classToClass(users));
+  }
+  public async changeStatusAndTemperature(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { power, temperature } = request.body;
+    const user_id = await request.user.id;
+    const id = request.params.id;
+    const equipmentService = new UpdateEquipmentStatusAndTemperature();
+    const equipment = await equipmentService.execute({
+      id,
+      user_id,
+      power,
+      temperature,
+      sendEvent: true,
+    });
+    return response.json(classToClass(equipment));
   }
   public async update(request: Request, response: Response): Promise<Response> {
     const {

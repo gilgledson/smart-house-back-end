@@ -60,6 +60,11 @@ export class Equipment1656792987641 implements MigrationInterface {
             default: false,
           },
           {
+            name: 'temperature',
+            type: 'decimal',
+            default: 0,
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',
