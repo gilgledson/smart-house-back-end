@@ -39,7 +39,7 @@ jobs:
     - name: "Install dependencies \U0001F468\U0001F3FB‍\U0001F4BB"
       run: yarn
     - name: migrations
-      run: yarn typeorm
+      run: yarn typeorm migration:run
       env:
         APP_URL: 'http://localhost:3333'
         APP_SECRET_KEY: d2f30b11385709b2b760444be14e2477
