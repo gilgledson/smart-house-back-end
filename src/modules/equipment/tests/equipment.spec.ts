@@ -75,11 +75,17 @@ describe('Equipamentos', () => {
     expect(equipament.name).toBe(name);
   });
   it('tentar deletar equipamento com usuario errado', async () => {
-    const equipaments = await deleteEquipment.execute({
-      id: faker.datatype.uuid(),
-      user_id: currentUser.id,
-    });
-    expect(equipaments).toThrow(AppError);
+    try {
+      await deleteEquipment.execute({
+        id: faker.datatype.uuid(),
+        user_id: currentUser.id,
+      });
+    } catch (error) {
+      expect(error).toEqual({
+        message: 'Equipment not found',
+        statusCode: 404,
+      });
+    }
   });
   it('deletar equipamento do usuario', async () => {
     const equipaments = await deleteEquipment.execute({
