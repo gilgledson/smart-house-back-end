@@ -10,6 +10,13 @@ name: ci
       - master
 jobs:
   ci:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [16]
+
     steps:
     - name: "Checkout \U0001F6CE"
       uses: actions/checkout@master
