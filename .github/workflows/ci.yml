@@ -33,6 +33,14 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     steps:
+    - name: Install PostgreSQL client
+        run: |
+          apt-get update
+          apt-get install --yes postgresql-client
+    - name: Query database
+        run: psql -h postgres -d smart_house -U postgres -c 'SELECT 1;'
+        env:
+          PGPASSWORD: password
     - name: "Checkout \U0001F6CE"
       uses: actions/checkout@master
     - name: "Setup node env \U0001F3D7"
