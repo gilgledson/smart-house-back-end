@@ -6,11 +6,14 @@ import CreateEquipmentService from '../services/CreateEquipmentService';
 import ListEquipmentService from '../services/ListEquipmentService';
 import Equipment from '../typeorm/entities/Equipment';
 import UpdateEquipmentService from '../services/UpdateEquipmentService';
+import DeleteEquipmentService from '../services/DeleteEquipmentService';
+import AppError from '@shared/errors/AppError';
 
 describe('Equipamentos', () => {
   let createEquipment: CreateEquipmentService;
   let updateEquipment: UpdateEquipmentService;
   let listEquipment: ListEquipmentService;
+  let deleteEquipment: DeleteEquipmentService;
   let currentEquipment: Equipment;
   let createUser: CreateUserService;
   let currentUser: User;
@@ -33,6 +36,7 @@ describe('Equipamentos', () => {
     createEquipment = new CreateEquipmentService();
     listEquipment = new ListEquipmentService();
     updateEquipment = new UpdateEquipmentService();
+    deleteEquipment = new DeleteEquipmentService();
   });
 
   test('Criando Equipamento', async () => {
@@ -53,6 +57,7 @@ describe('Equipamentos', () => {
     const equipaments = await listEquipment.execute(currentUser.id);
     expect(equipaments?.length).toBe(1);
   });
+
   it('atualizando equipamento do usuario', async () => {
     const name = faker.commerce.productName();
     const equipament = await updateEquipment.execute({
@@ -68,5 +73,19 @@ describe('Equipamentos', () => {
       country: faker.address.countryCode(),
     });
     expect(equipament.name).toBe(name);
+  });
+  it('tentar deletar equipamento com usuario errado', async () => {
+    const equipaments = await deleteEquipment.execute({
+      id: faker.datatype.uuid(),
+      user_id: currentUser.id,
+    });
+    expect(equipaments).toThrow(AppError);
+  });
+  it('deletar equipamento do usuario', async () => {
+    const equipaments = await deleteEquipment.execute({
+      id: currentEquipment.id,
+      user_id: currentUser.id,
+    });
+    expect(equipaments?.length).toBe(0);
   });
 });

@@ -17,9 +17,9 @@ describe('Usuario do Sistema', () => {
   let correntPassword: string;
   let currentUser: User;
   beforeAll(async () => {
-    correntPassword = faker.internet.password();
     await connection.create();
     await connection.clear();
+    correntPassword = faker.internet.password();
   });
 
   afterAll(async () => {
